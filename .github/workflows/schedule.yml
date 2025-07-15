@@ -1,0 +1,30 @@
+name: Scheduled Gmail Automate
+
+on:
+  schedule:
+    # Runs at 12:00pm and 6:00pm IST (6:30am and 12:30pm UTC)
+    - cron: '30 6,12 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GMAIL_TOKEN_PATH: ${{ secrets.GMAIL_TOKEN_PATH }}
+          GMAIL_CREDENTIALS_PATH: ${{ secrets.GMAIL_CREDENTIALS_PATH }}
+        run: python main.py 

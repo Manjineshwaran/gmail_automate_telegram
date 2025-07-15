@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+project.log
+
+# VSCode
+.vscode/
+
+# Credentials
+credentials.json
+token.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# GitHub Actions secrets (never push secrets, only reference them) 
