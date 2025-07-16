@@ -51,7 +51,7 @@ def get_today_emails(service):
         snippet = msg_data.get('snippet', '')
         logger.info("[TRACE] Email subject: %s, from: %s", safe_ascii(subject), safe_ascii(from_email))
         body = get_body(msg_data)
-        logger.info("[TRACE] Email body: %s...", safe_ascii(body[:100]))
+        # logger.info("[TRACE] Email body: %s...", safe_ascii(body[:100]))
         emails.append({
             'subject': subject,
             'from': from_email,

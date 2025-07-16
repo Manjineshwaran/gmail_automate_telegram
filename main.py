@@ -17,6 +17,7 @@ def main():
     logger.info("Quota units used: %d", quota_units)
     logger.info("Messages received: %d", len(emails))
     filtered_count = 0
+    email_count = len(emails)
     for email in emails:
         logger.info("From: %s", email['from'])
         logger.info("Subject: %s", email['subject'])
@@ -40,7 +41,7 @@ def main():
         #     msg = f"Job Enquiry from {email['from']}:\nSubject: {email['subject']}\n\n{email['snippet']}"
         #     send_whatsapp_message(msg)
         #     print(f"Sent WhatsApp for: {email['subject']}")
-        
+    logger.info("Total emails processed: %d", email_count) 
     logger.info("Messages filtered as job enquiries: %d", filtered_count)
 
 if __name__ == "__main__":
