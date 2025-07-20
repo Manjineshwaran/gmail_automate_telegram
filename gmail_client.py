@@ -49,7 +49,7 @@ def get_today_emails(service):
         subject = next((h['value'] for h in headers if h['name'] == 'Subject'), '')
         from_email = next((h['value'] for h in headers if h['name'] == 'From'), '')
         snippet = msg_data.get('snippet', '')
-        logger.info("[TRACE] Email subject: %s, from: %s", safe_ascii(subject), safe_ascii(from_email))
+        #logger.info("[TRACE] Email subject: %s, from: %s", safe_ascii(subject), safe_ascii(from_email))
         body = get_body(msg_data)
         # logger.info("[TRACE] Email body: %s...", safe_ascii(body[:100]))
         emails.append({
@@ -66,11 +66,11 @@ def get_body(msg_data):
         parts = msg_data['payload'].get('parts', [])
         logger.info("[TRACE] get_body: found %d parts", len(parts))
         for part in parts:
-            logger.info("[TRACE] get_body: part mimeType: %s", part['mimeType'])
+            #logger.info("[TRACE] get_body: part mimeType: %s", part['mimeType'])
             if part['mimeType'] == 'text/plain':
                 import base64
                 decoded = base64.urlsafe_b64decode(part['body']['data']).decode('utf-8')
-                logger.info("[TRACE] get_body: decoded text/plain body (first 100 chars): %s", safe_ascii(decoded[:100]))
+                #logger.info("[TRACE] get_body: decoded text/plain body (first 100 chars): %s", safe_ascii(decoded[:100]))
                 return decoded
         logger.info("[TRACE] get_body: no text/plain part found, returning snippet")
         return msg_data['snippet']

@@ -3,9 +3,9 @@ from job_filter import is_job_enquiry
 from telegram_client import send_telegram_message
 from whatsapp_client import send_whatsapp_message
 from logs import logger
+from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 
-TELEGRAM_BOT_TOKEN = "7297360867:AAFRqJSNL8nkK3jfsPBldApZwn5AnfTWFgk"
-TELEGRAM_CHAT_ID = "1306765800"
+
 
 def main():
     service = authenticate_gmail()
@@ -19,10 +19,10 @@ def main():
     filtered_count = 0
     email_count = len(emails)
     for email in emails:
-        logger.info("From: %s", email['from'])
-        logger.info("Subject: %s", email['subject'])
-        logger.info("Snippet: %s", email['snippet'])
-        logger.info("Body: %s", email['body'])
+        # logger.info("From: %s", email['from'])
+        # logger.info("Subject: %s", email['subject'])
+        # logger.info("Snippet: %s", email['snippet'])
+        # logger.info("Body: %s", email['body'])
         if is_job_enquiry(email):
             filtered_count += 1
             logger.info("[FILTERED] This email matches job enquiry keywords: %s", email['subject'])
@@ -43,6 +43,6 @@ def main():
         #     print(f"Sent WhatsApp for: {email['subject']}")
     logger.info("Total emails processed: %d", email_count) 
     logger.info("Messages filtered as job enquiries: %d", filtered_count)
-
+    print("\n",TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
 if __name__ == "__main__":
     main() 
