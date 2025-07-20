@@ -5,9 +5,6 @@ from whatsapp_client import send_whatsapp_message
 from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 from logs import logger
 
-TELEGRAM_BOT_TOKEN = TELEGRAM_BOT_TOKEN
-TELEGRAM_CHAT_ID = TELEGRAM_CHAT_ID
-
 def main():
     service = authenticate_gmail()
     emails = get_today_emails(service)
