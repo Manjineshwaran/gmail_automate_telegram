@@ -2,8 +2,11 @@ from gmail_client import authenticate_gmail, get_today_emails
 from job_filter import is_job_enquiry
 from telegram_client import send_telegram_message
 from whatsapp_client import send_whatsapp_message
-from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+# from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 from logs import logger
+
+TELEGRAM_BOT_TOKEN = "7297360867:AAFRqJSNL8nkK3jfsPBldApZwn5AnfTWFgk"
+TELEGRAM_CHAT_ID = "1306765800"
 
 def main():
     service = authenticate_gmail()
