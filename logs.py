@@ -1,12 +1,10 @@
 import logging
 
 logging.basicConfig(
-    filename='project.log',
     level=logging.INFO,
     format='%(asctime)s | %(filename)s:%(lineno)d | %(levelname)s | %(message)s',
     handlers=[
-        logging.FileHandler("project.log"),
         logging.StreamHandler()
     ]
 )
-logger = logging.getLogger(__name__) 
+logger = logging.getLogger(__name__)
