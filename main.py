@@ -4,8 +4,8 @@ from telegram_client import send_telegram_message
 from whatsapp_client import send_whatsapp_message
 from logs import logger
 
-TELEGRAM_BOT_TOKEN = "7297360867:AAFRqJSNL8nkK3jfsPBldApZwn5AnfTWFgk"
-TELEGRAM_CHAT_ID = "1306765800"
+TELEGRAM_BOT_TOKEN = TELEGRAM_BOT_TOKEN
+TELEGRAM_CHAT_ID = TELEGRAM_CHAT_ID
 
 def main():
     service = authenticate_gmail()
