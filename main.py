@@ -41,7 +41,7 @@ def main():
         #     print(f"Sent WhatsApp for: {email['subject']}")
     logger.info("Total emails processed: %d", email_count) 
     logger.info("Messages filtered as job enquiries: %d", filtered_count)
-    print("\n",TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID)
+    print("\nTELEGRAM_BOT_TOKEN :",TELEGRAM_BOT_TOKEN,"\nTELEGRAM_BOT_TOKEN :", TELEGRAM_CHAT_ID)
 
 if __name__ == "__main__":
     main() 
