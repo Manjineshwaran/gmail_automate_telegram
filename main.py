@@ -2,12 +2,9 @@ from gmail_client import authenticate_gmail, get_today_emails
 from job_filter import is_job_enquiry
 from telegram_client import send_telegram_message
 from whatsapp_client import send_whatsapp_message
-# from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 from logs import logger
-
-TELEGRAM_BOT_TOKEN = "7297360867:AAFRqJSNL8nkK3jfsPBldApZwn5AnfTWFgk"
-TELEGRAM_CHAT_ID = "1306765800"
-
+import os
 def main():
     service = authenticate_gmail()
     emails = get_today_emails(service)
@@ -45,6 +42,7 @@ def main():
     logger.info("Total emails processed: %d", email_count) 
     logger.info("Messages filtered as job enquiries: %d", filtered_count)
     print("\nTELEGRAM_BOT_TOKEN :",TELEGRAM_BOT_TOKEN,"\nTELEGRAM_BOT_TOKEN :", TELEGRAM_CHAT_ID)
-
+    print("TELEGRAM_BOT_TOKEN:", repr(os.environ.get("TELEGRAM_BOT_TOKEN")))
+    print("TELEGRAM_CHAT_ID:", repr(os.environ.get("TELEGRAM_CHAT_ID")))
 if __name__ == "__main__":
     main() 

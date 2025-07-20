@@ -33,8 +33,8 @@ def get_today_emails(service):
     # query = f'after:{today}'
 
     yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y/%m/%d')
+    # query = f'after:{yesterday} before:{today} label:inbox'  # Fetch emails from yesterday to today
     query = f'after:{yesterday}'
-
     # query = f'after:{today} label:inbox'
     print(f"[TRACE] Gmail query: {query}")
     logger.info("[TRACE] Gmail query: %s", query)
