@@ -34,7 +34,7 @@ jobs:
           GMAIL_TOKEN_PATH: token.json
           GMAIL_CREDENTIALS_PATH: credentials.json
         run: python main.py 
-      
+        
       - name: Upload project.log as artifact
         uses: actions/upload-artifact@v4
         with:
