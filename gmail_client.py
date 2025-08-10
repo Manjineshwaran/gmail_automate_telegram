@@ -7,13 +7,6 @@ import pickle
 from config import GMAIL_TOKEN_PATH, GMAIL_CREDENTIALS_PATH
 from logs import logger
 
-try:
-    from zoneinfo import ZoneInfo  # Python 3.9+
-    IST = ZoneInfo('Asia/Kolkata')
-except ImportError:
-    from pytz import timezone
-    IST = timezone('Asia/Kolkata')
-
 def safe_ascii(text):
     return text.encode('ascii', errors='replace').decode('ascii')
 
@@ -36,33 +29,27 @@ def authenticate_gmail():
     return build('gmail', 'v1', credentials=creds)
 
 def get_today_emails(service):
-    #today = datetime.datetime.now().strftime('%Y/%m/%d')
+    today = datetime.datetime.now().strftime('%Y/%m/%d')
     # query = f'after:{today}'
-    #yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y/%m/%d')
-    #query = f'after:{yesterday} before:{today} label:inbox'  # Fetch emails from yesterday to today
-    
-    #IST timezone handling
-    now_ist = datetime.datetime.now(IST)
-    # Calculate 24 hours ago in IST
-    last_24h_ist = now_ist - datetime.timedelta(hours=24)
-    # Convert to UTC before getting the timestamp
-    last_24h_utc = last_24h_ist.astimezone(datetime.timezone.utc)
-    after_unix = int(last_24h_utc.timestamp())
-    query = f'after:{after_unix} label:inbox'  # Fetch emails from last 24 hours in IST
+
+    yesterday = (datetime.datetime.now() - datetime.timedelta(days=1, hours=2)).strftime('%Y/%m/%d')
+    query = f'after:{yesterday}'
+
+    # query = f'after:{today} label:inbox'
     print(f"[TRACE] Gmail query: {query}")
-    # logger.info("[TRACE] Gmail query: %s", query)
+    logger.info("[TRACE] Gmail query: %s", query)
     results = service.users().messages().list(userId='me', q=query).execute()
     messages = results.get('messages', [])
     logger.info("[TRACE] Found %d messages for query: %s", len(messages), query)
     emails = []
     for msg in messages:
-        # logger.info("[TRACE] Fetching message ID: %s", msg['id'])
+        logger.info("[TRACE] Fetching message ID: %s", msg['id'])
         msg_data = service.users().messages().get(userId='me', id=msg['id'], format='full').execute()
         headers = msg_data['payload']['headers']
         subject = next((h['value'] for h in headers if h['name'] == 'Subject'), '')
         from_email = next((h['value'] for h in headers if h['name'] == 'From'), '')
         snippet = msg_data.get('snippet', '')
-        #logger.info("[TRACE] Email subject: %s, from: %s", safe_ascii(subject), safe_ascii(from_email))
+        logger.info("[TRACE] Email subject: %s, from: %s", safe_ascii(subject), safe_ascii(from_email))
         body = get_body(msg_data)
         # logger.info("[TRACE] Email body: %s...", safe_ascii(body[:100]))
         emails.append({
@@ -79,11 +66,11 @@ def get_body(msg_data):
         parts = msg_data['payload'].get('parts', [])
         logger.info("[TRACE] get_body: found %d parts", len(parts))
         for part in parts:
-            #logger.info("[TRACE] get_body: part mimeType: %s", part['mimeType'])
+            logger.info("[TRACE] get_body: part mimeType: %s", part['mimeType'])
             if part['mimeType'] == 'text/plain':
                 import base64
                 decoded = base64.urlsafe_b64decode(part['body']['data']).decode('utf-8')
-                #logger.info("[TRACE] get_body: decoded text/plain body (first 100 chars): %s", safe_ascii(decoded[:100]))
+                logger.info("[TRACE] get_body: decoded text/plain body (first 100 chars): %s", safe_ascii(decoded[:100]))
                 return decoded
         logger.info("[TRACE] get_body: no text/plain part found, returning snippet")
         return msg_data['snippet']
