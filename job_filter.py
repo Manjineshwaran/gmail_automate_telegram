@@ -1,8 +1,7 @@
-JOB_KEYWORDS = ["notation"]
+JOB_KEYWORDS = ["exam","pondicherry","pondicherry university","vr","virtual reality"]
     #"job", "career", "vacancy", "opportunity", "opening", "position", "hiring", "recruitment"
 
 JOB_SENDER_EMAILS = [
-    "student@internshala.com",
     "director.dde@pondiuni.ac.in",
     "ddehelpdesk@pondiuni.ac.in",
     "noreply@samarth.edu.in"
